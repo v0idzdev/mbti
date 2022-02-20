@@ -40,7 +40,7 @@ from keras.preprocessing.sequence import pad_sequences
 
 # *Opening the CSV file with the MBTI data*
 # Put it into a pandas dataframe called df
-with open("mbti_data/mbti.csv", encoding="utf8") as file:
+with open("data/mbti.csv", encoding="utf8") as file:
     df = pd.read_csv(file)
 
 types = [
