@@ -36,6 +36,8 @@ from nltk.corpus import stopwords
 from collections import Counter
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
+from keras.layers import LSTM, Embedding, Dense
+from keras.models import Sequential
 
 
 # *Opening the CSV file with the MBTI data*
@@ -166,16 +168,16 @@ print(f"\n{training_sentences[10]}\n{training_sequences[10]}")
 
 # Each sequence has a different length, so apply padding
 # Example: [6, 7, 6, 3, 2], [3, 3] becomes [6, 7, 6, 3, 2], [3, 3, 0, 0, 0]
-max_length = len(max(training_sequences))
+LENGTH_OF_LARGEST_SEQUENCE = len(max(training_sequences))
 
 # Pad the training sequences
 training_sequences = pad_sequences(
-    training_sequences, maxlen=max_length, padding="post", truncating="post"
+    training_sequences, maxlen=LENGTH_OF_LARGEST_SEQUENCE, padding="post", truncating="post"
 )
 
 # Pad the validation sequences
 validation_sequences = pad_sequences(
-    validation_sequences, maxlen=max_length, padding="post", truncating="post"
+    validation_sequences, maxlen=LENGTH_OF_LARGEST_SEQUENCE, padding="post", truncating="post"
 )
 
 # Check the length of the padded sequences
@@ -203,3 +205,20 @@ print(
     f"\nSequences: {training_sequences[10]}\n"
     + f"Decoded Sequences: {decoded_training_sequences}"
 )
+
+
+# *Creating the LSTM model for NLP*
+# Use a keras.Sequential model
+network = Sequential([
+
+    # Using word embeddings for an efficient, dense representation
+    Embedding(num_unique_words, 32, input_length=LENGTH_OF_LARGEST_SEQUENCE),
+
+    # LSTM layer will take an integer matrix input of size (batch, input_length) as input
+    # The largest integer (e.g., word index) in the input should be no larger than num_unique_words
+    LSTM(64, dropout=0.1),
+    Dense(1, activation="sigmoid")
+])
+
+# Show a summary of the LSTM model
+print(f"\n{network.summary()}")
