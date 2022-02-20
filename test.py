@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 __description__ = "Predicts an MBTI type based on text"
 __author__ = "Matthew Flegg"
 __version__ = "0.0.1"
@@ -42,15 +44,26 @@ with open("mbti_data/mbti.csv", encoding="utf8") as file:
     df = pd.read_csv(file)
 
 types = [
-    "INTP", "INTJ", "ENTP", "ENTJ",
-    "ISTP", "ISTJ", "ESTP", "ESTJ",
-    "INFP", "INFJ", "ENFP", "ENFJ",
-    "ISFP", "ISFJ", "ESFP", "ESFJ"
-    ]
+    "INTP",
+    "INTJ",
+    "ENTP",
+    "ENTJ",
+    "ISTP",
+    "ISTJ",
+    "ESTP",
+    "ESTJ",
+    "INFP",
+    "INFJ",
+    "ENFP",
+    "ENFJ",
+    "ISFP",
+    "ISFJ",
+    "ESFP",
+    "ESFJ",
+]
 
 # Print shape and number of rows and columns in the dataset
-print(f"Shape: {df.shape}\n"
-      + f"Rows: {df.shape[0]}, Cols: {df.shape[1]}\n")
+print(f"Shape: {df.shape}\n" + f"Rows: {df.shape[0]}, Cols: {df.shape[1]}\n")
 
 # Print how many of each type there are
 print(f"Type  Posts")
@@ -69,14 +82,17 @@ def remove_url(text):
     url = re.compile(r"https?://\S+|www.\.\S+")
     return url.sub(r"", text)
 
+
 def remove_punctuation(text):
     """Removes punctuation from a string of text"""
-    return re.sub("["+string.punctuation+"]", "", text)
+    return re.sub("[" + string.punctuation + "]", "", text)
+
 
 def remove_stopwords(text):
     """Removes words like "a", "an", "the", etc. from a string"""
     text = [word.lower() for word in text.split() if word.lower() not in stops]
-    return " ".join(text) # Puts the list of filtered words together
+    return " ".join(text)  # Puts the list of filtered words together
+
 
 # Remove URLs and punctuation from the posts
 df["posts"] = df.posts.map(remove_url)
@@ -98,6 +114,7 @@ def count_unique_words(df_column):
             count[word] += 1
 
     return count
+
 
 # Count each unique word in all of the posts
 # Print the 5 most common words to check it's working
@@ -124,13 +141,16 @@ validation_labels = validation_df.type.to_numpy()
 
 # Print sizes of the split data to check that everything's
 # working correctly
-print(f"\nNum training sentences: {training_sentences.shape}"
-      + f"\nNum validation sentences: {validation_sentences.shape}")
+print(
+    f"\nNum training sentences: {training_sentences.shape}"
+    + f"\nNum validation sentences: {validation_sentences.shape}"
+)
+
 
 # *Tokenizing the data*
 # Gives each word a unique index
 tokenizer = Tokenizer(num_words=num_unique_words)
-tokenizer.fit_on_texts(training_sentences) # Only fit to training data
+tokenizer.fit_on_texts(training_sentences)  # Only fit to training data
 
 # Each word has a unique index
 word_index = tokenizer.word_index
@@ -150,37 +170,36 @@ max_length = len(max(training_sequences))
 
 # Pad the training sequences
 training_sequences = pad_sequences(
-    training_sequences,
-    maxlen=max_length,
-    padding="post",
-    truncating="post"
-    )
+    training_sequences, maxlen=max_length, padding="post", truncating="post"
+)
 
 # Pad the validation sequences
 validation_sequences = pad_sequences(
-    validation_sequences,
-    maxlen=max_length,
-    padding="post",
-    truncating="post"
-    )
+    validation_sequences, maxlen=max_length, padding="post", truncating="post"
+)
 
 # Check the length of the padded sequences
-print(f"\nPadded: \n{training_sequences.shape} - Training"
-      + f"\n{validation_sequences.shape} - Validation")
+print(
+    f"\nPadded: \n{training_sequences.shape} - Training"
+    + f"\n{validation_sequences.shape} - Validation"
+)
 
 
 # *Testing the tokenization*
 # Swaps the keys around. Example: {"hello": 10} becomes {10: "hello"}
-reversed_word_index = dict([(index, word) for (word, index) in \
-                           word_index.items()])
+reversed_word_index = dict([(index, word) for (word, index) in word_index.items()])
+
 
 def decode(sequence):
     """Converts a sequence of indexes back into a sentence"""
     return " ".join([reversed_word_index.get(index, "?") for index in sequence])
 
+
 # Decode some training sentences
 decoded_training_sequences = decode(training_sequences[10])
 
 # Check that the sentences have encoded correctly by decoding them
-print(f"\nSequences: {training_sequences[10]}\n"
-      + f"Decoded Sequences: {decoded_training_sequences}")
+print(
+    f"\nSequences: {training_sequences[10]}\n"
+    + f"Decoded Sequences: {decoded_training_sequences}"
+)
