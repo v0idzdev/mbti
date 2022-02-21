@@ -1,6 +1,9 @@
 {
     "cSpell.words": [
+        "Brakus",
         "cybujan",
+        "dtype",
+        "Electa",
         "ENFJ",
         "ENFP",
         "ENTJ",
@@ -23,6 +26,9 @@
         "LSTM",
         "mbti",
         "nltk",
-        "Vectorise"
+        "pyplot",
+        "Vectorise",
+        "xlabel",
+        "ylabel"
     ]
 }
