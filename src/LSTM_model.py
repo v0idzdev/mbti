@@ -75,23 +75,12 @@ model = create_model()
 BATCH_SIZE = 2
 
 # Training the model
-def fit_model():
-    """Trains the LSTM model using MBTI data"""
-    model.fit(
+model.fit(
 
-        # Train for 30 epochs
-        train_padded, one_hot_labels,
-        epochs=30,
-        verbose=1,
-        validation_data=(val_padded, val_labels),
-        callbacks=[EarlyStopping(patience=3)]
-    )
-
-
-try:
-    print("Looking for saved weights...")
-    model.load_weights("src/models")
-except:
-    print("No saved weights found. Training model...")
-    fit_model()
-    model.save_weights("src/models")
+    # Train for 30 epochs
+    train_padded, one_hot_labels,
+    epochs=30,
+    verbose=1,
+    validation_data=(val_padded, val_labels),
+    callbacks=[EarlyStopping(patience=3)]
+)
