@@ -1,3 +1,9 @@
+"""
+Classifying twitter posts by MBTI type using a bidirectional LSTM
+Matthew Flegg ~ matthewflegg@outlook.com
+Date ~ 21/02/2022
+"""
+
 #####################
 ### PREPROCESSING ###
 #####################

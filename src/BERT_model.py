@@ -1,3 +1,9 @@
+"""
+Classifying twitter posts using a BERT model
+Matthew Flegg ~ matthewflegg@outlook.com
+Date ~ 21/02/2022
+"""
+
 #####################
 ### PREPROCESSING ###
 #####################

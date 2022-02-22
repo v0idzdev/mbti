@@ -1,5 +1,5 @@
 """
-Classifying twitter posts by MBTI type
+Preparing data in order to classify twitter posts by MBTI type
 Matthew Flegg ~ matthewflegg@outlook.com
 Date ~ 21/02/2022
 """
@@ -9,11 +9,8 @@ Date ~ 21/02/2022
 ### READING DATA ###
 ####################
 
-from math import trunc
-from turtle import shape
 import numpy as np # Linear algebra
-import pandas as pd
-import transformers # Data processing, CSV file I/0 (e.g. pd.read_csv)
+import pandas as pd # Data processing, CSV file I/0 (e.g. pd.read_csv)
 
 
 # Import the MBTI dataset CSV

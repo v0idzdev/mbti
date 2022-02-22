@@ -34,6 +34,7 @@
         "Lemmatizer",
         "Lemmatizes",
         "LSTM",
+        "matthewflegg",
         "mbti",
         "Multinomial",
         "nltk",
