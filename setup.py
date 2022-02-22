@@ -28,7 +28,7 @@ setup(
     ],
     keywords="MBTI, LSTM, machine learning, neural network, BERT, keras",
     package_dir={"": "src"},
-    packages=find_packages(),
+    packages=find_packages(where="src"),
     install_requires=[
         "tensorflow",
         "keras",
